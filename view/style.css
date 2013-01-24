@@ -1,0 +1,173 @@
+h1
+{
+	text-align: center;
+	font-size: 2em;
+	margin: 0px;
+}
+h2
+{
+	font-size: 1.8em;
+	margin: 0px;
+}
+td
+{
+	vertical-align: top;
+}
+
+.cachable
+{
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+	border: 1px solid black;
+}
+.cacher
+{
+	position: absolute;
+	right: 0px;
+}
+
+#bienvenue
+{
+	text-align: center;
+}
+#infos
+{
+	background-color: #DDDDFF;
+}
+#infos.cache
+{
+	height: 2.2em;
+}
+#infos p
+{
+	margin: 0px;
+}
+#infos ul
+{
+	margin: 0px;
+}
+#infos ol
+{
+	margin: 0px;
+}
+
+#addlogin
+{
+	margin: 6px 0px;
+}
+#logins
+{
+	display: inline;
+	padding: 0px;
+}
+#logins li
+{
+	display: inline;
+	border: 1px solid black;
+	cursor: pointer;
+	padding: 2px 8px;
+	margin: 0px 2px;
+	background-color: #AAAAAA;
+}
+.login
+{
+/*
+	border: 1px solid black;
+	cursor: pointer;
+	padding: 2px 8px;
+	background-color: #AAAAAA;*/
+}
+
+
+#edt
+{
+	position: relative;
+	
+}
+#loading
+{
+	position: absolute;
+	top: 150px;
+	left: 350px;
+	z-index: 1338;
+}
+.bloc
+{
+	font-size: 1em;
+	cursor: pointer;
+	position: absolute;
+	border: 1px solid black;
+	opacity: 0.8;
+	filter:alpha(opacity=80);
+}
+div .sel
+{
+	border: 2px solid blue;
+	color: blue;
+	font-weight: bold;
+	z-index: 1337;
+}
+.alt
+{
+	color: gray;
+	border: 1px solid gray;
+}
+.llibre
+{
+	color: green;
+}
+.ltdtps
+{
+	color: orange;
+}
+.lcours
+{
+	color: red;
+}
+.C
+{
+	background-color: #60CC60;
+}
+.D
+{
+	background-color: #DDDD60;
+}
+.T
+{
+	background-color: #9090DD;
+}
+
+
+
+
+#resto
+{
+	background-color: #FFBFBF;
+}
+#resto.cache
+{
+	height: 1.2em;
+}
+#resto h2
+{
+	font-size: 1em;
+	margin: 0px;
+	text-align: center;
+	text-transform: capitalize;
+}
+#menu
+{
+	width: 100%;
+	border-collapse: collapse;
+}
+#menu th
+{
+	text-align: center;
+	font-size: 1.5em;
+}
+#menu td
+{
+	border-bottom: 1px solid;
+	text-transform: lowercase;
+}
