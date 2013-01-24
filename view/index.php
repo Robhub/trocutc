@@ -13,7 +13,7 @@
 		<h1>Troc’UTC 2.0a (version de test)</h1>
 		<p id="bienvenue">
 			Bienvenue, tu es bien connecté en tant que « <?php echo $_SESSION['user']; ?> » — Ce n’est pas toi ? <a href="logout.php">Déconnexion</a><br/>
-			Veux-tu recevoir les demandes des autres étudiants par e-mail : <a href="<?php echo CONF::optinlink($_SESSION['user']); ?>">Oui</a> — <a href="<?php echo CONF::optoutlink($_SESSION['user']); ?>">Non</a>
+			Veux-tu recevoir les demandes des autres étudiants par e-mail : <a href="optin.php">Oui</a> — <a href="optout.php">Non</a>
 		</p>
 		<div id="infos" class="cachable cache">
 			<div class="cacher">Cliquez sur ce panneau pour le dérouler</div>

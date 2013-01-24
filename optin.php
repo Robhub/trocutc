@@ -1,7 +1,6 @@
 <?php
 session_save_path('sess');
 session_start();
-require_once 'incl/CONF.class.php';
 require_once 'incl/CAS.class.php';
 if (!isset($_SESSION['user']))
 {
@@ -11,7 +10,6 @@ if (!isset($_SESSION['user']))
 if (isset($_SESSION['user']))
 {
 	$login = $_SESSION['user'];
-	//if (!isset($_GET['key']) || $_GET['key'] != CONF::keygen($login)) die('Erreur : Clef invalide.');
 	require_once 'incl/BDD.class.php';
 	$bdd = new BDD();
 	$bdd->exec("UPDATE etudiant SET nospam=0 WHERE login='$login'");

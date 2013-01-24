@@ -1,2 +1,3 @@
-/cache/*
-/sess/*
+/cache
+/sess
+/EDT_*
