@@ -3,6 +3,7 @@ trocutc
 
 Troc'UTC est une association de l’UTC (www.utc.fr).
 Son but est de faciliter l’échange d’UV entre les étudiants.
+La version en ligne se situe sur http://wwwassos.utc.fr/trocutc/v2/
 
 Pour l’utiliser en local, d’abord, créez une base de données sur le modèle du fichier BDD.sql
 Ensuite, entrez les informations correspondantes dans BDD.json (mais ne commitez pas ce fichier évidemment)
