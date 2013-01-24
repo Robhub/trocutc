@@ -11,7 +11,7 @@ if (!isset($_SESSION['user']))
 if (isset($_SESSION['user']))
 {
 	$login = $_SESSION['user'];
-	if (!isset($_GET['key']) || $_GET['key'] != CONF::keygen($login)) die('Erreur : Clef invalide.');
+	//if (!isset($_GET['key']) || $_GET['key'] != CONF::keygen($login)) die('Erreur : Clef invalide.');
 	require_once 'incl/BDD.class.php';
 	$bdd = new BDD();
 	$bdd->exec("UPDATE etudiant SET nospam=1 WHERE login='$login'");
