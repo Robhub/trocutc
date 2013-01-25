@@ -8,6 +8,10 @@ class CURL
 		curl_setopt($this->ch, CURLOPT_HEADER, false);
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($this->ch, CURLOPT_SSLVERSION, 3);
+		curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+		//hcurl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 2);
+		
 		if ($proxy)
 		{
 			curl_setopt($this->ch, CURLOPT_PROXY, 'proxyweb.utc.fr');
@@ -30,6 +34,10 @@ class CURL
 		curl_setopt($this->ch, CURLOPT_POST, true);
 		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $params);
 		return curl_exec($this->ch);
+	}
+	public function error()
+	{
+		return curl_error($this->ch);
 	}
 }
 ?>

@@ -45,7 +45,7 @@ class MAJ
 		if (!is_dir($dossier)) mkdir($dossier);
 		$already = scandir($dossier);
 		/**/
-
+		
 		/* On télécharge ceux qui ne sont pas déjà téléchargés */
 		$todo = array_diff($dispo,$already);
 		$i = 0;
@@ -55,10 +55,45 @@ class MAJ
 			$c = $curl->get('http://wwwetu.utc.fr/sme/EDT/' . $f);
 			echo $c;
 			file_put_contents($dossier . '/' . $f, $c);
+			
 			$i++;
 			if ($i >= 20) break; // On évite de surcharger le serveur
 		}
-		if (count($todo) != 0) return false; // On a pas fini
+		
+		/* On récupère la liste des photos déjà téléchargées */
+		if (!is_dir('PIC')) mkdir('PIC');
+		$already_pic = scandir('PIC');
+		/**/
+		
+		require_once 'incl/SIMPLEIMAGE.class.php';
+		/* On télécharge celles qui ne sont pas déjà téléchargés */
+		function remedt($f){ return str_replace('.edt','.jpg',$f); }
+		$dispo_pic = array_map('remedt', $dispo);
+		
+		$todo_pic = array_diff($dispo_pic,$already_pic);
+		$i = 0;
+		echo 'Nombre de photos a telecharger : ' . count($todo_pic) . ' / ' . count($dispo_pic) . '<br/>';
+		foreach($todo_pic as $pic)
+		{
+			$login = str_replace('.jpg', '', $pic);
+			$c = $curl->get('https://demeter.utc.fr/pls/portal30/portal30.get_photo_utilisateur?username=' . $login);
+			$len = strlen($c);
+			echo $login.' = '.$len." octets<br/>\n";
+			file_put_contents('PIC/' . $pic, $c);
+			
+			if ($len > 24) // Si pas PHOTO NON PUBLIEE ou PHOTO NON DISPONIBLE
+			{
+				$image = new SimpleImage();
+				$image->load('PIC/' . $pic);
+				$image->resizeToHeight(240); // Utiliser un highly composite number : 60 120 180 240 360 720
+				$image->save('PIC/' . $pic);
+			}
+			
+			$i++;
+			if ($i >= 20) break; // On évite de surcharger le serveur
+		}
+		
+		if (count($todo) != 0 || count($todo_pic) != 0) return false; // On a pas fini
 		return $dossier;
 	}
 	

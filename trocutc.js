@@ -21,52 +21,108 @@ $(document).ready(function()
 	$('.cachable').click(function(e){ $(this).toggleClass('cache', 500); });
 	$('body').keydown(function(e){ if (e.which == 27) reset(); });
 	$('#cedt').click(reset);
-	$('#troclogin').keyup(function(e){ if (e.which == 13) addLogin(); });
-	$('#loadcours').click(addLogin);
-	loadAllCours();
+	$('#troclogin').keyup(addInputLogin);
+	$('#loadcours').click(addInputLogin);
+	addLogin($('#login').text(), false);
+	//loadAllCours();
 	loadResto();
 	loadLogins();
 	draw(CANVAS.getContext("2d"));
 });
-addLogin = function()
+addInputLogin = function()
 {
-	var login = $('#troclogin').val();
-	if (!$.grep(LOGINS,function(o){ return o.login == login})[0]) return;
+	addLogin($('#troclogin').val(), true);
+}
+addLogin = function(login, checkIfExists)
+{
+	if (checkIfExists && !$.grep(LOGINS,function(o){ return o.login == login})[0]) return;
 	$('#troclogin').val('');
-	$('#logins').append('<li>'+login+'</li>');
+	$('#logins').append('<li><img src="PIC/'+login+'.jpg" alt="?"/>'+login+'</li>');
 	loadAllCours();
 }
 loadAllCours = function()
 {
 	$('#edt .bloc').remove();
 	$('#loading').show();
-	var nlogins = $('#logins > li').length;
 	$('#logins > li').each(function(i,elt)
 	{
 		$(elt).click(function(e){ $(this).remove(); loadAllCours(); });
 		var login = $(elt).text();
-		$.getJSON('ajax.php?a=cours.json', {login: login}, function(data){ loadCours(data,nlogins,i); });
+		$.getJSON('ajax.php?a=cours.json', {login: login}, function(data){ loadCours(data, i); });
 	});
 }
-loadCours = function(data,nlogins,i)
+
+// Regarde la liste des cours pour voir si le cours donné serait par dessus un autre cours, auquel cas il faut réduire la hauteur des cours
+reduceCours = function(cours, samelogin)
 {
-	var total = 0;
+	var gene = false;
+	$('.bloc').each(function(){
+		var moncours = $(this).data('cours');
+		if (moncours == cours) return false;
+		if (samelogin && moncours.login != cours.login) return false;
+		if (moncours.jour != cours.jour) return false;
+		if (parseInt(moncours.fin) > parseInt(cours.debut) && parseInt(moncours.debut) < parseInt(cours.fin))
+		{
+			$(this).css({height:EDTH/2});
+			gene = true;
+		}
+	});
+	return gene; // Pour savoir si il a fallu réduire ou pas..
+}
+updateBlocs = function()
+{
+	var wratio = EDTW/60; // Minutes -> Pixels
+	var nlogins = $('#logins > li').length;
+	$('.bloc').each(function()
+	{
+		var bloc = $(this);
+		var cours = bloc.data('cours');
+		var nlogin = bloc.data('nlogin');
+		
+		// Contenu
+		var groupe = cours.groupe > 0 ? groupe = ' (grp '+cours.groupe+')' : '';
+		var display = cours.uv+groupe+'<br/>'+cours.salle;
+		if (nlogins > 1) display = cours.uv+'&nbsp;'+cours.login; // Multi-emploi-du-temps : affichage restreint
+		bloc.html(display);
+
+		// Bordures
+		var borderW = (bloc.outerWidth() - bloc.innerWidth())/2;
+		var borderH = (bloc.outerHeight() - bloc.innerHeight())/2;
+		
+		// Positionnement axe X
+		bloc.css('left', EDTX+(cours.debut-HEURE_DEB*60)*wratio);
+		bloc.css('width', (cours.fin-cours.debut)*wratio - borderW);
+		
+		// Positionnement axe Y
+		var gene = reduceCours(cours, nlogins == 1);
+		var height = EDTH/parseInt(cours.frequence.substr(1,1)); // Les TP ont souvent un F2 car ils sont une semaine sur 2
+		var top = EDTY+cours.jour*EDTH;
+		
+		if (nlogins == 1) top += (gene?1:0)*(EDTH/2);
+		
+		else
+		{
+			top += nlogin*(EDTH/nlogins) + (EDTH/nlogins)*(gene?1:0);
+			height = (EDTH+borderH)/nlogins/(gene?2:1)-borderH;
+		}
+		bloc.css('top', top);
+		bloc.css('height', height - borderH);
+	});
+}
+
+loadCours = function(data, nlogin)
+{
 	$.each(data,function(c,cours)
 	{
-		var groupe = cours.groupe > 0 ? groupe = ' (grp '+cours.groupe+')' : '';
-		var content = nlogins == 1 ? cours.uv+groupe+'<br/>'+cours.salle : cours.uv+'&nbsp;'+cours.login;
-		var bloc = $('<div class="bloc '+cours.type+'">'+content+'</div>');
-		var marge = bloc.outerHeight()-bloc.innerHeight();
-		var wratio = EDTW/60;
-		total += (cours.fin - cours.debut);
-		bloc.css({left:EDTX+(cours.debut-HEURE_DEB*60)*wratio,width:(cours.fin-cours.debut)*wratio,height:EDTH-marge});
-		if (nlogins == 1) bloc.css({top:EDTY+cours.jour*EDTH});
-		else bloc.css({top:EDTY+cours.jour*EDTH+i*(EDTH/nlogins),height:(EDTH+marge)/nlogins-marge});
-		bloc.data('cours',cours);
+		var bloc = $('<div/>');
+		bloc.addClass('bloc');
+		bloc.addClass(cours.type); // Pour colorier en fonction du type
+		bloc.data('nlogin', nlogin);
+		bloc.data('cours', cours);
 		bloc.click(clickCours);
 		$('#edt').append(bloc);
 	});
-	//$('#infos').append(total/60);// total horaire
+	updateBlocs();
 	$('#loading').hide();
 }
 clickCours = function(e)
@@ -86,7 +142,7 @@ clickCours = function(e)
 		{
 			if (cours.groupe == target.data('cours').groupe)
 			{
-				logins.push('<span class="login">'+cours.login+'</span>');
+				logins.push('<div class="login">'+cours.login+'</div>');
 				return;
 			}
 			var grp = 'grp'+cours.groupe;
@@ -94,24 +150,13 @@ clickCours = function(e)
 			{
 				var groupe = ''; if (cours.groupe > 0) groupe = ' (grp '+cours.groupe+')';
 				var bloc = $('<div class="alt bloc '+cours.type+'">'+cours.uv+groupe+'<br/>'+cours.salle+'</div>');
+				/*
 				var wratio = EDTW/60;
-				var gene = false;
-				$('.bloc').each(function(){
-					var moncours = $(this).data('cours');
-					if (moncours.jour == cours.jour && parseInt(moncours.fin) > parseInt(cours.debut) && parseInt(moncours.debut) < parseInt(cours.fin))
-					{
-						
-						$(this).css({height:EDTH/2});
-						gene = true;
-					}
-				});
+				var gene = reduceCours(cours, false); // Si l'alternative est par dessus un autre cours, il faut diviser par 2 la hauteur de chacun
 				var h = EDTH/(gene?2:1);
 				var y = EDTY+cours.jour*EDTH+(gene?1:0)*(EDTH/2);
 				bloc.css({left:EDTX+(cours.debut-HEURE_DEB*60)*wratio,top:y,width:(cours.fin-cours.debut)*wratio,height:h});
-				
-				
-				//bloc.mouseover(overCoursAlt);
-				//bloc.mouseout(outCoursAlt);
+				*/
 				bloc.click(clickCoursAlt);
 				bloc.data('cours',cours);
 				bloc.data('logins-cours',[]);
@@ -125,24 +170,55 @@ clickCours = function(e)
 			else alts[grp].data('logins-libre').push(cours.login+'@etu.utc.fr');
 			
 		});
-		$('#res').html(logins.join(', <br/>'));
+		$('#res').html(logins.join(''));//, <br/>
+		
 		$('.login').each(function()
 		{
 			var login = $(this).text();
 			$(this).data('login',login);
 			var designation = $.grep(LOGINS,function(o){ return o.login == login})[0].designation;
 			var affichage = login+'@etu.utc.fr';
-			if (designation) affichage = '"'+designation+'" <'+affichage+'>';
-			$(this).text(affichage);
+			if (designation) affichage = '"'+designation+'" &lt;'+affichage+'&gt;';
+			//$(this).html('<img src="https://demeter.utc.fr/pls/portal30/portal30.get_photo_utilisateur?username='+login+'" alt="???" />'+affichage);
+			$(this).html('<img src="PIC/'+login+'.jpg" alt="?" />'+affichage);
+			
 		});
+		$('.login').mouseover(function(){setPic($(this).data('login'));});
+		//$('.login').mouseout(setFirstPic);
+		setFirstPic();
 		$('.login').click(function(e)
 		{
-			$('#logins').append('<li>'+$(this).data().login+'</li>');
+			addLogin($(this).data().login);
 			loadAllCours();
 		});
+		updateBlocs();
 		$('#loading').hide();
 	});
 }
+setFirstPic = function()
+{
+	setPic($('.login:first').data('login'));
+}
+setPic = function(login)
+{
+	$('#pic').html('<img src="PIC/'+login+'.jpg" alt="?" />');
+}
+biggen = function() // Agrandissement des images au survol de la souris
+{
+	var elt = $(this);
+	var clone = elt.clone();
+	$('body').append(clone);
+	clone.css('height','');
+	if (elt.width() == clone.width() && elt.height() == clone.height()) clone.remove();
+	else
+	{
+		clone.css('position','absolute');
+		clone.css('left',elt.offset().left+elt.width()/2-clone.width()/2);
+		clone.css('top',elt.offset().top+elt.height()/2-clone.height()/2);
+		clone.mouseout(function(){ clone.remove(); });
+	}
+}
+
 function sel(elt)
 {
 	//$('.bloc').css({height:EDTH});
@@ -169,7 +245,10 @@ function clickCoursAlt(e)
 	if (target.data('logins-libre').length >= 1)
 	{
 		$('#res').append('Il y a '+target.data('logins-libre').length+' personnes pour un éventuel échange<br/>');
-		$('#res').append(envoi);
+		console.log($('#logins').text());
+		console.log($('#login').text());
+		
+		if ($('#logins').text() == $('#login').text()) $('#res').append(envoi); // TODO : Vérifier si le login est le notre ?
 	}
 	else $('#res').append('Désolé, aucune personne trouvée');
 	
@@ -180,11 +259,13 @@ function clickCoursAlt(e)
 }
 function reset()
 {
-	if ($('#logins > li').length == 1) $('.bloc').css({height:EDTH});//marche pas quand plusieurs logins chargés BUG TODO
+	//if ($('#logins > li').length == 1) $('.bloc').css({height:EDTH});//marche pas quand plusieurs logins chargés BUG TODO
 	$('.sel').removeClass('sel');
 	$('.alt').remove();
 	$('#uv').text('');
+	$('#pic').html('');
 	$('#res').html('');
+	updateBlocs();
 }
 
 function loadLogins()

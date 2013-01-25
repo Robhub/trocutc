@@ -12,7 +12,7 @@
 	<body>
 		<h1>Troc’UTC 2.0a (version de test)</h1>
 		<p id="bienvenue">
-			Bienvenue, tu es bien connecté en tant que « <?php echo $_SESSION['user']; ?> » — Ce n’est pas toi ? <a href="logout.php">Déconnexion</a><br/>
+			Bienvenue, tu es bien connecté en tant que « <span id="login"><?php echo $_SESSION['user']; ?></span> » — Ce n’est pas toi ? <a href="logout.php">Déconnexion</a><br/>
 			Veux-tu recevoir les demandes des autres étudiants par e-mail : <a href="optin.php">Oui</a> — <a href="optout.php">Non</a>
 		</p>
 		<div id="infos" class="cachable cache">
@@ -37,7 +37,9 @@
 						<label for="troclogin">Login</label>
 						<input size="12" id="troclogin" type="text" />
 						<button id="loadcours">OK</button>
-						<ol id="logins"><li><?php echo $_SESSION['user']; ?></li></ol>
+						<ol id="logins">
+						<!--<li><?php echo $_SESSION['user']; ?></li>-->
+						</ol>
 					</div>
 					<div id="edt">
 						<img id="loading" src="view/loading51.gif" alt="loading" />
@@ -50,7 +52,8 @@
 					</div>
 				</td>
 				<td>
-					<h1 id="uv"></h1>
+					<h2 id="uv"></h2>
+					<div id="pic"></div>
 					<div id="res"></div>
 				</td>
 			</tr>

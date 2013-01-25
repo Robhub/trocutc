@@ -1,3 +1,7 @@
+body
+{
+	font-family: sans-serif;
+}
 h1
 {
 	text-align: center;
@@ -8,6 +12,7 @@ h2
 {
 	font-size: 1.8em;
 	margin: 0px;
+	padding-left: 2px;
 }
 td
 {
@@ -63,20 +68,58 @@ td
 }
 #logins li
 {
-	display: inline;
+	display: inline-block;
 	border: 1px solid black;
 	cursor: pointer;
 	padding: 2px 8px;
 	margin: 0px 2px;
-	background-color: #AAAAAA;
+	background-color: #CCC;
+	vertical-align: middle;
 }
-.login
+#logins > li > img
 {
-/*
+	float: left;
+	height: 48px; /* utiliser un multiple de 240 : 48, 40, 30, 24 */
+}
+#pic
+{
+	width: 200px;
+	float: left;
+	margin: 10px 0px;
+	margin-left: 6px;
+	min-height: 240px;
+}
+#pic img
+{
+	height: 240px;
+	
+}
+#res
+{
+	font-size: 0;
+}
+#res .login
+{
+	font-size: 12px;
+	display: inline-block;
+	width: 200px;
+	height: 60px;
 	border: 1px solid black;
 	cursor: pointer;
-	padding: 2px 8px;
-	background-color: #AAAAAA;*/
+	background-color: #CCC;
+	margin: 2px;
+	overflow: hidden;
+}
+#res .login:hover
+{
+	background-color: #DDD;
+}
+#res .login img
+{
+	float: left;
+	margin-right: 4px;
+	height: 100%;
+	min-width: 46px;
 }
 
 
@@ -94,7 +137,7 @@ td
 }
 .bloc
 {
-	font-size: 1em;
+	font-size: 12px;
 	cursor: pointer;
 	position: absolute;
 	border: 1px solid black;
@@ -103,9 +146,9 @@ td
 }
 div .sel
 {
-	border: 2px solid blue;
+	border: 1px solid blue;
 	color: blue;
-	font-weight: bold;
+	/*font-weight: bold;*/
 	z-index: 1337;
 }
 .alt
@@ -140,6 +183,9 @@ div .sel
 
 
 
+
+
+/* Restaurant Universitaire */
 
 #resto
 {
