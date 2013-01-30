@@ -50,3 +50,4 @@
 2012-09-22 06:01:17 127.0.0.1 rbergere IC06 D 2 dialloab@utc.utc.fr, udebella@utc.utc.fr
 2012-09-22 06:31:59 127.0.0.1 rbergere IC06 D 2 dialloab@utc.utc.fr, udebella@utc.utc.fr
 2012-09-27 01:17:29 89.170.246.112 bderenzo LA14 D 7 atrauthn@utc.utc.fr, bignonju@utc.utc.fr, dectotam@utc.utc.fr, pblavier@utc.utc.fr
+2013-01-29 09:55:32 127.0.0.1 rbergere LB14 D 1 bazingab@utc.utc.fr, bgavalda@utc.utc.fr, bnarvaez@utc.utc.fr, gerymano@utc.utc.fr, lowychar@utc.utc.fr, morinale@utc.utc.fr, nbelouis@utc.utc.fr, raineman@utc.utc.fr, ssavigne@utc.utc.fr, torresce@utc.utc.fr

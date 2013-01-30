@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Troc’UTC 2.0a (22/09/12)</title>
+		<title>Troc’UTC 2.01b (29/01/13)</title>
 		<link rel="stylesheet" href="view/style.css" />
 		<link rel="stylesheet" href="view/jquery-ui.css" />
 		<script type="text/javascript" src="libs/jquery/1.8.1/jquery.min.js"></script>
@@ -10,10 +10,12 @@
 		<script type="text/javascript" src="trocutc.js"></script>
 	</head>
 	<body>
-		<h1>Troc’UTC 2.0a (version de test)</h1>
+		<a href="https://github.com/robhub/trocutc"><img style="height: 120px; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+		<h1>Troc’UTC 2.01b (version de test)</h1>
 		<p id="bienvenue">
 			Bienvenue, tu es bien connecté en tant que « <span id="login"><?php echo $_SESSION['user']; ?></span> » — Ce n’est pas toi ? <a href="logout.php">Déconnexion</a><br/>
-			Veux-tu recevoir les demandes des autres étudiants par e-mail : <a href="optin.php">Oui</a> — <a href="optout.php">Non</a>
+			Veux-tu recevoir les demandes des autres étudiants par e-mail : <a href="optin.php">Oui</a> — <a href="optout.php">Non</a><br/>
+			Pour le choix de publication des photos, c'est sur <a href="https://demeter.utc.fr/pls/portal30/TROMBINOSCOPE.PUBLI_PHOTO_AUTORISATION_DYN.show">Mon dossier : Ma photo - Autorisation de publication</a>
 		</p>
 		<div id="infos" class="cachable cache">
 			<div class="cacher">Cliquez sur ce panneau pour le dérouler</div>
@@ -25,9 +27,9 @@
 			</ul>
 			<p>Mode d’emploi :</p>
 			<ul>
-				<li>Entrer un login dans le champ de texte ci-dessous et appuyer sur entrée ou sur le bouton OK pour l’ajouter. (clic rectangle gris pour l’enlever)</li>
+				<li>Entrer un login dans le champ de texte ci-dessous et appuyer sur entrée ou sur le bouton OK pour l’ajouter. (clic sur le rectangle gris pour l’enlever)</li>
 				<li>Cliquer sur le rectangle d’un TD/TP pour faire apparaître en gris les TD/TP alternatifs (des autres groupes).</li>
-				<li>Cliquer sur une des alternatives pour voir la liste d’élèves pour un échange éventuel.</li>
+				<li>Cliquer sur une des alternatives pour voir le nombre d’élèves pour un échange et éventuellement faire la demande.</li>
 			</ul>
 		</div>
 		<table>
@@ -53,6 +55,7 @@
 				</td>
 				<td>
 					<h2 id="uv"></h2>
+					<div id="exchange"></div>
 					<div id="pic"></div>
 					<div id="res"></div>
 				</td>

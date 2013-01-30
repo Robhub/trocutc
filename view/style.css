@@ -35,6 +35,8 @@ td
 #bienvenue
 {
 	text-align: center;
+	margin: 0px;
+	margin-bottom: 4px;
 }
 #infos
 {
@@ -71,7 +73,8 @@ td
 	display: inline-block;
 	border: 1px solid black;
 	cursor: pointer;
-	padding: 2px 8px;
+	padding: 0px;
+	padding-right: 8px;
 	margin: 0px 2px;
 	background-color: #CCC;
 	vertical-align: middle;
@@ -79,7 +82,8 @@ td
 #logins > li > img
 {
 	float: left;
-	height: 48px; /* utiliser un multiple de 240 : 48, 40, 30, 24 */
+	height: 60px; /* utiliser un multiple de 240 : 48, 40, 30, 24 */
+	margin-right: 4px;
 }
 #pic
 {
