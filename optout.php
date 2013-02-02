@@ -13,7 +13,8 @@ if (isset($_SESSION['user']))
 	require_once 'incl/BDD.class.php';
 	$bdd = new BDD();
 	$bdd->exec("UPDATE etudiant SET nospam=1 WHERE login='$login'");
-	echo 'L’adresse '.$login.'@etu.utc.fr a bien été désinscrite sur Troc’UTC.<br/><a href="javascript:history.back()">Retour à la page précédente.</a>';
+	header('Content-Type: text/html; charset=utf-8');
+	echo 'Lâ€™adresse '.$login.'@etu.utc.fr a bien Ã©tÃ© dÃ©sinscrite sur Trocâ€™UTC.<br/><a href="javascript:history.back()">Retour Ã  la page prÃ©cÃ©dente.</a>';
 }
 else CAS::login();
 ?>

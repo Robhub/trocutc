@@ -21,7 +21,7 @@ $(document).ready(function()
 	$('.cachable').click(function(e){ $(this).toggleClass('cache', 500); });
 	$('body').keydown(function(e){ if (e.which == 27) reset(); });
 	$('#cedt').click(reset);
-	$('#troclogin').keyup(addInputLogin);
+	$('#troclogin').keyup(function(e){ if (e.which == 13) addInputLogin });
 	$('#loadcours').click(addInputLogin);
 	addLogin($('#login').text(), false);
 	loadResto();
@@ -30,7 +30,7 @@ $(document).ready(function()
 });
 addInputLogin = function(e)
 {
-	if (e.which == 13) addLogin($('#troclogin').val(), true);
+	addLogin($('#troclogin').val(), true);
 }
 addLogin = function(login, checkIfExists)
 {
@@ -133,11 +133,13 @@ loadCours = function(data, nlogin)
 }
 clickCours = function(e)
 {
+	$('#res').html('');
+	$('#pic').html('');
+	$('#etu').html('');
 	
 	var target = $(e.target);//{uv:target.data('cours').uv, type:target.data('cours').type}
 	sel(target);
-	if ($('#logins > li').length > 1) return; // Pas d'alternatives en mode groupe
-	
+
 	$('#loading').show();
 	$.getJSON('ajax.php?a=alts.json', target.data('cours'), function(data)
 	{
@@ -161,7 +163,7 @@ clickCours = function(e)
 				bloc.data('logins-cours',[]);
 				bloc.data('logins-tdtps',[]);
 				bloc.data('logins-libre',[]);
-				$('#edt').append(bloc);
+				if ($('#logins > li').length == 1) $('#edt').append(bloc); // On ne montre les alternatives que s'il n'y a qu'un seul étudiant
 				alts[grp] = bloc;
 			}
 			if (cours.canmail > 0 && cours.cours > 0) alts[grp].data('logins-cours').push(cours.login+'@etu.utc.fr');
@@ -170,7 +172,7 @@ clickCours = function(e)
 			
 		});
 		
-		$('#res').html(logins.join(''));//, <br/>
+		$('#etu').html(logins.join(''));//, <br/>
 		
 		$('.login').each(function()
 		{
@@ -203,7 +205,9 @@ setPic = function(login)
 }
 getPic = function(login)
 {
-	return '<img src="pic.php?login='+login+'" alt="?" />';
+	//return '<img src="pic.php?login='+login+'" alt="?" />';
+	return '<img src="https://demeter.utc.fr/pls/portal30/portal30.get_photo_utilisateur?username='+login+'" alt="?" />';
+	
 }
 biggen = function() // Agrandissement des images au survol de la souris
 {
@@ -232,11 +236,10 @@ function sel(elt)
 function clickCoursAlt(e)
 {
 	var target = $(e.target);
-	$('#pic').html('');
 	$('#res').html('');
-	$('#exchange').html('');
+	$('#pic').html('');
+	$('#etu').html('');
 	sel(target);
-	
 	
 	var params = '';
 	var envoi = $('<button>Demander l’échange par E-Mail</button><pre></pre>').click(function()
@@ -247,8 +250,8 @@ function clickCoursAlt(e)
 	});
 	if (target.data('logins-libre').length >= 1)
 	{
-		$('#exchange').append('Il y a '+target.data('logins-libre').length+' personnes pour un éventuel échange<br/>');
-		if ($.trim($('#logins').text()) == $.trim($('#login').text())) $('#exchange').append(envoi); // Pas de bouton si c'est pas nous
+		$('#res').append('Il y a '+target.data('logins-libre').length+' personnes pour un éventuel échange<br/>');
+		if ($.trim($('#logins').text()) == $.trim($('#login').text())) $('#res').append(envoi); // Pas de bouton si c'est pas nous
 	}
 	else $('#res').append('Désolé, aucune personne trouvée');
 	
@@ -262,9 +265,9 @@ function reset()
 	$('.sel').removeClass('sel');
 	$('.alt').remove();
 	$('#uv').text('');
-	$('#pic').html('');
 	$('#res').html('');
-	$('#exchange').html('');
+	$('#pic').html('');
+	$('#etu').html('');
 	updateBlocs();
 }
 

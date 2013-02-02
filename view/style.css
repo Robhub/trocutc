@@ -98,11 +98,11 @@ td
 	height: 240px;
 	
 }
-#res
+#etu
 {
 	font-size: 0;
 }
-#res .login
+#etu .login
 {
 	font-size: 12px;
 	display: inline-block;
@@ -114,11 +114,11 @@ td
 	margin: 2px;
 	overflow: hidden;
 }
-#res .login:hover
+#etu .login:hover
 {
 	background-color: #DDD;
 }
-#res .login img
+#etu .login img
 {
 	float: left;
 	margin-right: 4px;

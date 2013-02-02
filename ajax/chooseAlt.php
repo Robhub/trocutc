@@ -35,8 +35,8 @@ $jour = $jours[$res->jour];
 $mails = array();
 foreach($logins as $x) { $mails[] = $x->login.'@utc.utc.fr'; }
 $subject = "Troc’UTC : Demande d’échange $uv";
-$message = '[DEBUG : vrais mails = '.implode(', ',$mails)."]\r\n";// DEBUG
-//$message = '';// VERSION FINALE
+//$message = '[DEBUG : vrais mails = '.implode(', ',$mails)."]\r\n";// DEBUG
+$message = '';// VERSION FINALE
 $message .= "Bonjour,\r\n";
 $message .= $_SESSION['user']."@etu.utc.fr aimerais échanger son $type de $uv qu’il a de $deb à $fin le $jour avec le tiens.\r\n";
 $message .= "Si tu es intéressé, réponds-lui par E-Mail au plus vite.\r\n";
@@ -46,14 +46,14 @@ $headers = '';
 $headers .= "From: $mymail\r\n";
 $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/plain; charset=UTF-8\r\n";
-$headers .= 'Bcc: synaphis@gmail.com';// POUR TESTER LE BCC (CCI)
-//$headers .= 'Bcc: '.implode(', ',$mails);// ATTENTION CECI EST POUR LA VERSION FINALE DE PRODUCTION
-echo htmlspecialchars("==TO==\n$mymail\n");
-echo htmlspecialchars("==SUBJECT==\n$subject\n");
-echo htmlspecialchars("==MESSAGE==\n$message\n");
-echo htmlspecialchars("==HEADERS==\n$headers\n");
-echo "==RESULTAT==\n".date('Y/m/d H:i:s ');
-if (@mail($mymail, mutf8($subject), $message, $headers)) echo 'E-Mail envoyé';
+$headers .= 'Bcc: ' . $mymail . ', ' . implode(', ',$mails);
+//echo htmlspecialchars("==TO==\n$mymail\n");
+//echo htmlspecialchars("==SUBJECT==\n$subject\n");
+//echo htmlspecialchars("==MESSAGE==\n$message\n");
+//echo htmlspecialchars("==HEADERS==\n$headers\n");
+//echo "==RESULTAT==\n";
+echo date('Y/m/d H:i:s ');
+if (@mail('', mutf8($subject), $message, $headers)) echo 'E-Mail envoyé'; // premier param = destinataires visibles
 else echo 'Erreur lors de l’envoi E-mail';
 // On log
 file_put_contents('logs/chooseAlt.txt', date('Y-m-d H:i:s').' '.$_SERVER['REMOTE_ADDR'].' '.$_SESSION['user'].' '.$_GET['uv'].' '.$_GET['type'].' '.$_GET['groupe'].' '.implode(', ',$mails)."\r\n", FILE_APPEND);

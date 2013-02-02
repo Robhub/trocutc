@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Troc’UTC 2.01b (29/01/13)</title>
+		<title>Troc’UTC 2.01b (02/02/13)</title>
 		<link rel="stylesheet" href="view/style.css" />
 		<link rel="stylesheet" href="view/jquery-ui.css" />
 		<script type="text/javascript" src="libs/jquery/1.8.1/jquery.min.js"></script>
@@ -55,9 +55,9 @@
 				</td>
 				<td>
 					<h2 id="uv"></h2>
-					<div id="exchange"></div>
-					<div id="pic"></div>
 					<div id="res"></div>
+					<div id="pic"></div>
+					<div id="etu"></div>
 				</td>
 			</tr>
 		</table>
