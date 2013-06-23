@@ -1,0 +1,4 @@
+<Files BDD.json>
+	Order allow,deny
+	Deny from all
+</Files>
