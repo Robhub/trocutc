@@ -38,8 +38,8 @@ $subject = "Troc’UTC : Demande d’échange $uv";
 //$message = '[DEBUG : vrais mails = '.implode(', ',$mails)."]\r\n";// DEBUG
 $message = '';// VERSION FINALE
 $message .= "Bonjour,\r\n";
-$message .= $_SESSION['user']."@etu.utc.fr aimerais échanger son $type de $uv qu’il a de $deb à $fin le $jour avec le tiens.\r\n";
-$message .= "Si tu es intéressé, réponds-lui par E-Mail au plus vite.\r\n";
+$message .= $_SESSION['user']."@etu.utc.fr aimerais échanger son $type de $uv qu’il/elle a de $deb à $fin le $jour avec le tiens.\r\n";
+$message .= "Si tu es intéressé(e), réponds-lui par E-Mail au plus vite.\r\n";
 $message .= "\r\n";
 $message .= 'Pour ne plus recevoir de messages, va sur '.CONF::serviceurl()."optout.php et connecte-toi avec ton compte UTC.";
 $headers = '';
