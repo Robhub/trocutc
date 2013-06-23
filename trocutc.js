@@ -21,7 +21,7 @@ $(document).ready(function()
 	$('.cachable').click(function(e){ $(this).toggleClass('cache', 500); });
 	$('body').keydown(function(e){ if (e.which == 27) reset(); });
 	$('#cedt').click(reset);
-	$('#troclogin').keyup(function(e){ if (e.which == 13) addInputLogin });
+	$('#troclogin').keyup(function(e){ if (e.which == 13) { addInputLogin(); } });
 	$('#loadcours').click(addInputLogin);
 	addLogin($('#login').text(), false);
 	loadResto();
@@ -244,9 +244,11 @@ function clickCoursAlt(e)
 	var params = '';
 	var envoi = $('<button>Demander l’échange par E-Mail</button><pre></pre>').click(function()
 	{
-		var show = $(this).next();
-		//TODO : demander une confirmation ^_^
-		$.get('ajax.php?a=chooseAlt', target.data('cours'), function(data) { show.html(data); });
+		if (confirm("Etes vous sur de vouloir envoyer le mail ?") == true)
+		{
+			var show = $(this).next();
+			$.get('ajax.php?a=chooseAlt', target.data('cours'), function(data) { show.html(data); });
+		}
 	});
 	if (target.data('logins-libre').length >= 1)
 	{

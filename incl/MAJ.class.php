@@ -200,8 +200,8 @@ class MAJ
 		$regex = '([A-Z]{2}[A-Z0-9]{2})'; // 1: UV (2 lettres, 2 chiffres)
 		$regex .= '(?: )+';
 		$regex .= '(C|D|T)'; // 2: Type (Cours,TD,TP)
-		$regex .= '(?: )+';
-		$regex .= '([0-9])?'; // 3: Groupe de TD ou TP (facultatif)
+		$regex .= '(?: )*';
+		$regex .= '([0-9]{0,2})'; // 3: Groupe de TD ou TP (facultatif)
 		$regex .= '(?: )+';
 		$regex .= '(LUNDI|MARDI|MERCREDI|JEUDI|VENDREDI|SAMEDI)'; // 4: Jour
 		$regex .= '(?: |\.)+';

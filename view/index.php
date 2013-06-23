@@ -10,8 +10,9 @@
 		<script type="text/javascript" src="trocutc.js"></script>
 	</head>
 	<body>
+		<div style="position: absolute; bottom: 0; left:0; padding: 4px; background-color: #bbf">remarques/suggestion : <a href="mailto:trocutc@assos.utc.fr">trocutc@assos.utc.fr</a></div>
 		<a href="https://github.com/robhub/trocutc"><img style="height: 120px; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-		<h1>Troc’UTC 2.01b (version de test)</h1>
+		<h1>Troc’UTC 2.01b (version beta)</h1>
 		<p id="bienvenue">
 			Bienvenue, tu es bien connecté en tant que « <span id="login"><?php echo $_SESSION['user']; ?></span> » — Ce n’est pas toi ? <a href="logout.php">Déconnexion</a><br/>
 			Veux-tu recevoir les demandes des autres étudiants par e-mail : <a href="optin.php">Oui</a> — <a href="optout.php">Non</a><br/>
