@@ -197,7 +197,7 @@ class MAJ
 	}
 	private static function regex()
 	{
-		$regex = '([A-Z]{2}[A-Z0-9]{2})'; // 1: UV (2 lettres, 2 chiffres)
+		$regex = '([A-Z0-9]{4})'; // 1: UV (2 lettres, 2 chiffres) [cas particuliers : C2I1]
 		$regex .= '(?: )+';
 		$regex .= '(C|D|T)'; // 2: Type (Cours,TD,TP)
 		$regex .= '(?: )*';
@@ -211,7 +211,7 @@ class MAJ
 		$regex .= ',';
 		$regex .= '(F[0-9]{1})'; // 7: Fréquence (1 fois toutes les N semaines)
 		$regex .= ',S=';
-		$regex .= '([A-Z]{2}[0-9]{3})?'; // 8: Salle (facultatif à cause de SPJE)
+		$regex .= '([A-Z0-9]{5})?'; // 8: Salle (facultatif à cause de SPJE) [cas particuliers : GAUSS]
 		$regex .= "(?: |\n)";
 		return $regex;
 	}
