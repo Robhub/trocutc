@@ -15,7 +15,7 @@ $requete = "SELECT A.*,COUNT(B.login) tdtps, COUNT(C.login) cours, A.login NOT I
 $req = $bdd->prepare($requete);
 $bdd->execute($req,array('jour'=>$_GET['jour'],'debut'=>$_GET['debut'],'fin'=>$_GET['fin'],'uv'=>$_GET['uv'],'type'=>$_GET['type']));
 
-file_put_contents('logs/alts.txt', date('Y-m-d H:i:s').' '.$_SERVER['REMOTE_ADDR'].' '.$_SESSION['user'].' '.$_GET['login'].' '.$_GET['uv']."\r\n", FILE_APPEND);
+file_put_contents('logs/alts.txt', date('Y-m-d H:i:s').' '.$_SESSION['user'].' '.$_GET['login'].' '.$_GET['uv']."\r\n", FILE_APPEND);
 header('Content-Type: application/json');
 echo json_encode($req->fetchAll(PDO::FETCH_OBJ));
 ?>

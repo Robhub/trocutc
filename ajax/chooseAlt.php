@@ -56,7 +56,7 @@ echo date('Y/m/d H:i:s ');
 if (@mail('', mutf8($subject), $message, $headers)) echo 'E-Mail envoyé'; // premier param = destinataires visibles
 else echo 'Erreur lors de l’envoi E-mail';
 // On log
-file_put_contents('logs/chooseAlt.txt', date('Y-m-d H:i:s').' '.$_SERVER['REMOTE_ADDR'].' '.$_SESSION['user'].' '.$_GET['uv'].' '.$_GET['type'].' '.$_GET['groupe'].' '.implode(', ',$mails)."\r\n", FILE_APPEND);
+file_put_contents('logs/chooseAlt.txt', date('Y-m-d H:i:s').' '.$_SESSION['user'].' '.$_GET['uv'].' '.$_GET['type'].' '.$_GET['groupe'].' '.implode(', ',$mails)."\r\n", FILE_APPEND);
 function mutf8($x)
 {
 	return '=?UTF-8?B?'.base64_encode($x).'?=';
