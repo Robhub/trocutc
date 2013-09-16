@@ -33,7 +33,7 @@ $jours = array('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'
 $jour = $jours[$res->jour];
 
 $mails = array();
-foreach($logins as $x) { $mails[] = $x->login.'@utc.utc.fr'; }
+foreach($logins as $x) { $mails[] = $x->login.'@etu.utc.fr'; }
 $subject = "Troc’UTC : Demande d’échange $uv";
 //$message = '[DEBUG : vrais mails = '.implode(', ',$mails)."]\r\n";// DEBUG
 $message = '';// VERSION FINALE
